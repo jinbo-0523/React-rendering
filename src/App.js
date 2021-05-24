@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { ChildArea } from "./ChildArea";
 import "./styles.css";
 
@@ -10,17 +10,17 @@ export default function App() {
   const onChangeText = (e) => setText(e.target.value);
 
   const onClickOpen = () => setOpen(!open);
-
-  const onClickCountUp = () => {
-    setCount(count + 1);
-  };
+  // 処理してるないおようは同じなのに違うものと判断されて再レンダリングされる。
+  // そのため同じものを「使っているよ」と表すためにuseCallbackを使用する(openが変わったときに再生成される)
+  // const onClickClose = useCallback(() => setOpen(false),[open]);
+  const onClickClose = useCallback(() => setOpen(false), [setOpen]);
   return (
     <div className="App">
       <input value={text} onChange={onChangeText} />
       <br />
       <br />
       <button onClick={onClickOpen}>表示</button>
-      <ChildArea open={open} />
+      <ChildArea open={open} onClickClose={onClickClose} />
     </div>
   );
 }
