@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { ChildArea } from "./ChildArea";
 import "./styles.css";
 
@@ -14,6 +14,10 @@ export default function App() {
   // そのため同じものを「使っているよ」と表すためにuseCallbackを使用する(openが変わったときに再生成される)
   // const onClickClose = useCallback(() => setOpen(false),[open]);
   const onClickClose = useCallback(() => setOpen(false), [setOpen]);
+
+  const temp = useMemo(() => 1 + 3, []);
+  console.log(temp);
+
   return (
     <div className="App">
       <input value={text} onChange={onChangeText} />
